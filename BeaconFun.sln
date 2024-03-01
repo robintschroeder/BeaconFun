@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeaconFun", "BeaconFun\BeaconFun.csproj", "{EFD47384-53AC-4B43-8F34-DCD26072A9FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFD47384-53AC-4B43-8F34-DCD26072A9FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD47384-53AC-4B43-8F34-DCD26072A9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD47384-53AC-4B43-8F34-DCD26072A9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD47384-53AC-4B43-8F34-DCD26072A9FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {175E7579-02EF-4EBE-8BF1-6640A4D76297}
+	EndGlobalSection
+EndGlobal
