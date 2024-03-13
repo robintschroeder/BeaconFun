@@ -43,4 +43,15 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
+    <Color x:Key="Green100Accent">#b3ffb3</Color>
+    <Color x:Key="Green200Accent">#8aff8a</Color>
+    <Color x:Key="Green300Accent">#61ff61</Color>
+    <Color x:Key="Green400Accent">#38ff38</Color>
+    <Color x:Key="Green500Accent">#0fff0f</Color>
+    <Color x:Key="Green600Accent">#00e600</Color>
+    <Color x:Key="Green700Accent">#00bd00</Color>
+    <Color x:Key="Green800Accent">#009400</Color>
+    <Color x:Key="Green900Accent">#006b00</Color>
+    <Color x:Key="Green1000Accent">#004200</Color>
+
 </ResourceDictionary>

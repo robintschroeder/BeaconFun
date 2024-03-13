@@ -4,6 +4,7 @@ using Android.Opengl;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
+using Plugin.BLE.Abstractions.EventArgs;
 using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace BeaconFun;
@@ -12,7 +13,6 @@ public partial class MainPage : ContentPage
 {
     IBluetoothLE ble;
     IAdapter adapter;
-    IDevice device;
 
     public MainPage()
     {
@@ -27,28 +27,40 @@ public partial class MainPage : ContentPage
         {
             Debug.WriteLine($"The bluetooth state changed to {e.NewState}");
         };
-        adapter.DeviceDiscovered += (s, e) =>
-        {
-            if (!string.IsNullOrEmpty(e.Device.Name))
-            {
-                Debug.WriteLine($"---");
-                Debug.WriteLine($"Discovered {e.Device.Name} {e.Device.Id} {e.Device.Rssi}");
-                foreach (var a in e.Device.AdvertisementRecords)
-                {
-                    Debug.WriteLine($"{a.Type} {ByteArrayToHexString(a.Data)}");
-
-                    if (IsIBeaconAdvertisement(a.Data))
-                    {
-                        Debug.WriteLine("Its a beacon!");
-                    }
-
-
-                }
-            }
-            device = e.Device;
-        };
+        adapter.DeviceDiscovered += OnDeviceDiscovered;
 
         getBLEPermission();
+    }
+
+    private void OnDeviceDiscovered(object sender, DeviceEventArgs e)
+    {
+        var dev = e.Device;
+
+        if (!string.IsNullOrEmpty(dev.Name))
+        {
+            Debug.WriteLine($"---");
+            Debug.WriteLine($"Discovered {dev.Name} {dev.Id} {dev.Rssi}");
+            foreach (var a in dev.AdvertisementRecords)
+            {
+                //Debug.WriteLine($"{a.Type} {BeaconByteHelper.ByteArrayToHexString(a.Data)}");
+
+                if (BeaconByteHelper.IsIBeaconAdvertisement(a.Data))
+                {
+                    var iBeacon = BeaconByteHelper.ParseiBeaconBytes(a.Data);
+                    UpdateBeaconSquare(iBeacon);
+                }
+            }
+        }
+    }
+
+    private void UpdateBeaconSquare(iBeacon iBeacon)
+    {
+        //beacon #1
+        if(iBeacon.Major == 1234)
+        {
+
+        }
+
     }
 
     //TODO: add another for the eddystone beacon specs
@@ -57,19 +69,7 @@ public partial class MainPage : ContentPage
     //about Tx Power
     //https://docs.silabs.com/bluetooth/2.13/general/system-and-performance/bluetooth-tx-power-settings#tx-power-for-data-packets
 
-    public bool IsIBeaconAdvertisement(byte[] data)
-    {
-        if (data == null)
-            return false;
-
-        if (data.Length != 25)
-            return false;
-
-        if (data[2] != 0x02)
-            return false;
-
-        return true;
-    }
+    
 
     private static async void getBLEPermission()
     {
@@ -128,12 +128,7 @@ public partial class MainPage : ContentPage
         Debug.WriteLine("Done Scanning");
 
     }
-
-    public string  ByteArrayToHexString(byte[] bytes)
-    {
-        return BitConverter.ToString(bytes).Replace("-", "");
-        
-    }
+   
 }
 
 
