@@ -1,19 +1,40 @@
 ﻿using System;
+using Java.Time;
+
 namespace BeaconFun
 {
-	public class iBeacon
-	{
-		public iBeacon()
-		{
-		}
+    public class iBeacon
+    {
+        public iBeacon()
+        {
+        }
 
-		public int DataLength { get; set; }
+        public int DataLength { get; set; }
         public Guid UUID { get; set; }
         public int Major { get; set; }
         public int Minor { get; set; }
-		public int RSSI { get; set; }
+        public int RSSI_1_Meter { get; set; }
+        public int RSSI { get; set; }
+
         public DateTime LastSeenDateTime { get; set; }
 
+        public double Environmental_Factor = 2.4;
+
+        //who knows if this works
+        //https://stackoverflow.com/questions/65124232/how-to-get-distance-from-beacons
+        public double DistanceInMeters {
+            get
+            {
+                if(RSSI_1_Meter > 0 && RSSI != 0)
+                {
+                    return Math.Pow(10,((RSSI_1_Meter - RSSI)/(10 * Environmental_Factor)));
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
         public Color RssiColor
         { 
             get

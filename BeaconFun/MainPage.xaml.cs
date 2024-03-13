@@ -42,11 +42,11 @@ public partial class MainPage : ContentPage
             Debug.WriteLine($"Discovered {dev.Name} {dev.Id} {dev.Rssi}");
             foreach (var a in dev.AdvertisementRecords)
             {
-                //Debug.WriteLine($"{a.Type} {BeaconByteHelper.ByteArrayToHexString(a.Data)}");
+                Debug.WriteLine($"{a.Type} {BeaconByteHelper.ByteArrayToHexString(a.Data)}");
 
                 if (BeaconByteHelper.IsIBeaconAdvertisement(a.Data))
                 {
-                    var iBeacon = BeaconByteHelper.ParseiBeaconBytes(a.Data);
+                    var iBeacon = BeaconByteHelper.ParseiBeaconBytes(a.Data, dev.Rssi);
                     UpdateBeaconSquare(iBeacon);
                 }
             }
@@ -55,10 +55,17 @@ public partial class MainPage : ContentPage
 
     private void UpdateBeaconSquare(iBeacon iBeacon)
     {
-        //beacon #1
-        if(iBeacon.Major == 1234)
+        switch (iBeacon.Minor)
         {
-
+            case 4949:
+                SQ1.BackgroundColor = iBeacon.RssiColor;
+                break;
+            case 26049 :
+                SQ2.BackgroundColor = iBeacon.RssiColor;
+                break;
+            case 37728:
+                SQ3.BackgroundColor = iBeacon.RssiColor;
+                break;
         }
 
     }
@@ -68,8 +75,6 @@ public partial class MainPage : ContentPage
 
     //about Tx Power
     //https://docs.silabs.com/bluetooth/2.13/general/system-and-performance/bluetooth-tx-power-settings#tx-power-for-data-packets
-
-    
 
     private static async void getBLEPermission()
     {
@@ -128,7 +133,7 @@ public partial class MainPage : ContentPage
         Debug.WriteLine("Done Scanning");
 
     }
-   
+
 }
 
 
